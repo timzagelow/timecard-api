@@ -54,4 +54,10 @@ routes.get('/ranges/current', checkJwt, async (req, res, next) => {
     res.status(code).send(current);
 });
 
+routes.delete('/ranges/:id', checkJwt, jwtAuthz(['manage:pay-periods']), async(req, res, next) => {
+    await ranges.remove(req.params.id);
+
+    res.status(204).send();
+});
+
 module.exports = routes;
