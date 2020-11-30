@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const paidTimeLogSchema = new Schema({
-    username: String,
+    username: { type: String, required: true },
     date: { type: Date, default: Date.now },
     reason: String,
 });
 
 const paidTimeSchema = new Schema({
-    username: { type: String, unique: true },
-    used: Number,
-    available: Number,
+    username: { type: String, unique: true, required: true },
+    used: { type: Number, required: true },
+    available: { type: Number, required: true },
 });
 
 paidTimeSchema.statics.useDay = async (username) => {

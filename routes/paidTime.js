@@ -42,7 +42,7 @@ routes.post('/manage/:username', checkJwt, jwtAuthz(['manage:paid-time']), async
 });
 
 routes.patch('/manage/:username', checkJwt, jwtAuthz(['manage:paid-time']), async (req, res) => {
-    res.send(await paidTime.get(req.params.username, req.body));
+    res.send(await paidTime.update(req.params.username, req.body));
 });
 
 module.exports = routes;

@@ -1,6 +1,14 @@
 const { PaidTime } = require('../models/PaidTime');
 
 async function create(username, data) {
+    if (!data.used) {
+        data.used = 0;
+    }
+
+    if (!data.available) {
+        data.available = 0;
+    }
+
     let paidTime = new PaidTime({
         username: username,
         used: data.used,
@@ -11,21 +19,19 @@ async function create(username, data) {
 }
 
 async function get(username) {
-    return await PaidTime.find({ username: username });
+    return await PaidTime.findOne({ username: username });
 }
 
 async function update(username, data) {
-    let payload = { username: username };
+    const paidTime = await PaidTime.findOne({ username: username });
 
     if (data.used) {
-        payload.used = data.used;
+        paidTime.used = data.used;
     }
 
     if (data.available) {
-        payload.available = data.available;
+        paidTime.available = data.available;
     }
-
-    const paidTime = PaidTime.findOne({ username: username });
 
     return await paidTime.save();
 }
