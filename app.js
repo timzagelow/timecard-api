@@ -1,21 +1,28 @@
 const express = require('express');
 const app = express();
+require('express-async-errors');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const routes = require('./routes');
-require ('./db');
+const entriesRoutes = require('./routes/entries');
+const rangesRoutes = require('./routes/ranges');
+const paidTimeRoutes = require('./routes/paidTime');
+const db = require('./db');
 
 require('dotenv').config();
 
-// Enable CORS
 app.use(cors());
 
-// Enable the use of request body parsing middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use('/timecard', routes);
+(async() => {
+    await db.load();
+})();
+
+app.use('/timecard/entries', entriesRoutes);
+app.use('/timecard/ranges', rangesRoutes);
+app.use('/timecard/paid-time', paidTimeRoutes);
 
 app.listen(process.env.APP_PORT);

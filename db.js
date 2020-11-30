@@ -7,7 +7,7 @@ module.exports = class Database {
             if (!Database.db) {
                 try {
                     Database.db = await mongoose.connect(process.env.MONGO_CONNECTION_STRING,
-                        { useUnifiedTopology: true, useNewUrlParser: true });
+                        { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
                 } catch (err) {
                     console.error(err);
                 }

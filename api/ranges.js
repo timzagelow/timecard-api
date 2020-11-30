@@ -1,10 +1,7 @@
-const db = require('../db');
 const Range = require('../models/Range');
 const moment = require('moment');
 
 async function getRanges() {
-    await db.load();
-
     return await Range.find().sort({ start: 1 });
 }
 
@@ -18,16 +15,12 @@ async function create(data) {
     let start = moment(data.start + ' 00:00:00').toISOString();
     let end = moment(data.end + ' 23:59:59').toISOString();
 
-    await db.load();
-
     const range = new Range({ start: start, end: end });
 
     return await range.save();
 }
 
 async function update(id, data) {
-    await db.load();
-
     const range = await Range.findOne({ _id: id });
 
     if (data.start) {
@@ -42,8 +35,6 @@ async function update(id, data) {
 }
 
 async function remove(id) {
-    await db.load();
-
     return await Range.deleteOne({ _id: id });
 }
 
