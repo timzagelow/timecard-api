@@ -14,10 +14,11 @@ routes.post('/', checkJwt, jwtAuthz(['create:timecard']), async(req, res, next) 
     }
 });
 
-//
-// routes.patch('/:id', checkJwt, jwtAuthz(['update:timecard']), async(req, res, next) => {
-//     res.send(await entries.update(req.params.id, req.body));
-// });
+routes.delete('/:id', checkJwt, jwtAuthz(['delete:timecard']), async(req, res) => {
+    let username = req.user[`${process.env.API_NAMESPACE}/username`] || 'test';
+
+    res.send(await paidTimeLog.revoke(req.params.id, username));
+});
 
 routes.get('/', checkJwt, jwtAuthz(['read:timecard']), async (req, res) => {
     let username = req.user[`${process.env.API_NAMESPACE}/username`] || 'test';

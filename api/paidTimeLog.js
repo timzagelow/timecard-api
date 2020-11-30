@@ -12,7 +12,7 @@ async function create(username, data) {
     let payload = {
         username: username,
         reason: data.reason,
-        date: moment(data.date).toISOString(),
+        date: moment(data.date),
     };
 
     let paidTimeLog = new PaidTimeLog(payload);
@@ -35,12 +35,15 @@ async function getRange(username, data) {
     return await PaidTimeLog.find(payload);
 }
 
-async function update(id, data) {
+async function revoke(id, username) {
+    await PaidTimeLog.deleteOne({ _id: id, username: username });
+
+    return await PaidTime.findOneAndUpdate({ username: username }, { $inc: { used: -1, available: 1 }});
 }
 
 module.exports = {
     create,
     get,
     getRange,
-    update,
+    revoke,
 };

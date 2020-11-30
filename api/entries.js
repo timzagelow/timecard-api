@@ -2,8 +2,8 @@ const Entry = require('../models/Entry');
 const moment = require('moment');
 
 async function getRange(username, data) {
-    let start = moment(data.start + ' 00:00:00').toISOString();
-    let end = moment(data.end + ' 23:59:59').toISOString();
+    let start = moment(data.start + ' 00:00:00').utc();
+    let end = moment(data.end + ' 23:59:59').utc();
 
     return await Entry.find({ username: username, date: { $gte: start, $lte: end } }).sort({ date: 1 });
 }

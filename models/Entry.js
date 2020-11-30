@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+// const timeZone = require('mongoose-timezone');
 
 const entrySchema = new Schema({
     username: String,
@@ -12,6 +13,8 @@ entrySchema.statics.isPunchedIn = async (username) => {
 
     return entry.type === 'in';
 };
+
+// entrySchema.plugin(timeZone);
 
 const Entry = mongoose.model('Entry', entrySchema);
 

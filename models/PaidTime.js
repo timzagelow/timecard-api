@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+// const timeZone = require('mongoose-timezone');
 
 const paidTimeLogSchema = new Schema({
     username: { type: String, required: true },
@@ -17,6 +18,7 @@ paidTimeSchema.statics.useDay = async (username) => {
     return await PaidTime.findOneAndUpdate({ username: username }, { $inc: { used: 1, available: -1 }});
 };
 
+// paidTimeLogSchema.plugin(timeZone);
 const PaidTimeLog = mongoose.model('PaidTimeLog', paidTimeLogSchema);
 const PaidTime = mongoose.model('PaidTime', paidTimeSchema);
 

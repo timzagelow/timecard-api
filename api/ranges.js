@@ -12,8 +12,8 @@ async function getCurrent() {
 }
 
 async function create(data) {
-    let start = moment(data.start + ' 00:00:00').toISOString();
-    let end = moment(data.end + ' 23:59:59').toISOString();
+    let start = moment(data.start + ' 00:00:00');
+    let end = moment(data.end + ' 23:59:59');
 
     const range = new Range({ start: start, end: end });
 
