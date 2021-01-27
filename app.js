@@ -29,6 +29,8 @@ app.use('/timecard/ranges', rangesRoutes);
 app.use('/timecard/paid-time', paidTimeRoutes);
 app.use('/timecard/totals', totalsRoutes);
 
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }));
+
 app.use(errorHandler);
 
 app.listen(process.env.APP_PORT);
