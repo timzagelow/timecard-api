@@ -27,4 +27,13 @@ routes.get('/range/:start/:end', checkJwt, jwtAuthz(['read:timecard']), async (r
     res.send(result);
 });
 
+
+routes.get('/current', checkJwt, jwtAuthz(['read:timecard']), async (req, res) => {
+    let username = req.user[`${process.env.API_NAMESPACE}/username`] || 'test';
+
+    const result = await entries.getCurrentRange(username);
+
+    res.send(result);
+});
+
 module.exports = routes;

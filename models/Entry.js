@@ -11,7 +11,7 @@ const entrySchema = new Schema({
 entrySchema.statics.isPunchedIn = async (username) => {
     let entry = await Entry.findOne({ username: username }).sort({ date: -1 });
 
-    return entry.type === 'in';
+    return entry && entry.type === 'in';
 };
 
 // entrySchema.plugin(timeZone);

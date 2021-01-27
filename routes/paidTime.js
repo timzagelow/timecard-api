@@ -34,8 +34,18 @@ routes.get('/range/:start/:end', checkJwt, jwtAuthz(['read:timecard']), async (r
     res.send(result);
 });
 
+routes.get('/available', checkJwt, jwtAuthz(['read:timecard']), async (req, res) => {
+    let username = req.user[`${process.env.API_NAMESPACE}/username`] || 'test';
+
+    res.send(await paidTime.get(username));
+});
+
 routes.get('/manage/:username', checkJwt, jwtAuthz(['manage:paid-time']), async (req, res) => {
     res.send(await paidTime.get(req.params.username));
+});
+
+routes.get('/manage', checkJwt, jwtAuthz(['manage:paid-time']), async (req, res) => {
+    res.send(await paidTime.getAll());
 });
 
 routes.post('/manage/:username', checkJwt, jwtAuthz(['manage:paid-time']), async (req, res) => {

@@ -6,7 +6,7 @@ async function create(username, data) {
     const available = await PaidTime.findOne({ username: username}, 'available');
 
     if (!available || (available && available < 1)) {
-        throw createHttpError(404, 'No paid days left.');
+        throw createHttpError(400, 'No paid days left.');
     }
 
     let payload = {

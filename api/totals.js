@@ -1,9 +1,9 @@
 const moment = require('moment');
-const { PaidTime, PaidTimeLog } = require('../models/PaidTime');
+const paidTimeLog = require('../api/paidTimeLog');
 const Entry = require('../models/Entry');
 
 async function getTotals(data) {
-    const entries = await Entry.find({ date: { $gte: moment(data.start + ' 00:00:00').utc(), $lte: moment(data.end + ' 23:59:59').utc()}});
+    const entries = await Entry.find({ date: { $gte: moment(data.start).utc(), $lte: moment(data.end).utc()}});
 
     let indexed = {};
 
@@ -17,6 +17,9 @@ async function getTotals(data) {
     });
 
     for (let user in indexed) {
+        const pto = await paidTimeLog.getRange(user, { start: data.start, end: data.end });
+        indexed[user].paidTime = pto;
+
         indexed[user].hours = calculateHours(indexed[user].entries);
     }
 

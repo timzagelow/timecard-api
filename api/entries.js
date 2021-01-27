@@ -1,15 +1,22 @@
 const Entry = require('../models/Entry');
 const moment = require('moment');
+const ranges = require('./ranges');
 
 async function getRange(username, data) {
-    let start = moment(data.start + ' 00:00:00').utc();
-    let end = moment(data.end + ' 23:59:59').utc();
+    let start = moment(data.start).utc();
+    let end = moment(data.end).utc();
 
     return await Entry.find({ username: username, date: { $gte: start, $lte: end } }).sort({ date: 1 });
 }
 
 async function getAllEntries(username) {
     return await Entry.find({ username: username });
+}
+
+async function getCurrentRange(username) {
+    let current = await ranges.getCurrent();
+
+    return await getRange(username, { start: current.start, end: current.end });
 }
 
 async function create(username) {
@@ -25,12 +32,10 @@ async function create(username) {
 async function update(id, data) {
     const entry = await Entry.findOne({ _id: id });
 
-    if (data.date) {
-        entry.date = data.date;
-    }
-
-    if (data.type) {
-        entry.type = data.type;
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            entry[key] = data[key];
+        }
     }
 
     return await entry.save();
@@ -40,5 +45,6 @@ module.exports = {
     create,
     getAllEntries,
     getRange,
+    getCurrentRange,
     update,
 };

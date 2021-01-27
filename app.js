@@ -7,6 +7,8 @@ const entriesRoutes = require('./routes/entries');
 const rangesRoutes = require('./routes/ranges');
 const paidTimeRoutes = require('./routes/paidTime');
 const totalsRoutes = require('./routes/totals');
+const errorHandler = require('./errorHandler');
+
 const db = require('./db');
 
 require('dotenv').config();
@@ -26,5 +28,7 @@ app.use('/timecard/entries', entriesRoutes);
 app.use('/timecard/ranges', rangesRoutes);
 app.use('/timecard/paid-time', paidTimeRoutes);
 app.use('/timecard/totals', totalsRoutes);
+
+app.use(errorHandler);
 
 app.listen(process.env.APP_PORT);

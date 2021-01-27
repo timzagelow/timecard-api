@@ -13,15 +13,15 @@ routes.patch('/:id', checkJwt, jwtAuthz(['manage:pay-periods']), async(req, res)
 
 routes.get('/', checkJwt, async (req, res, next) => {
     let payload = await ranges.getRanges();
-    let code = payload.length ? 200 : 204;
+    let result = payload.length ? payload : [];
 
-    res.status(code).send(payload);
+    res.send(result);
 });
 
-routes.get('/current', checkJwt, async (req, res, next) => {
+routes.get('/current', async (req, res, next) => {
     let current = await ranges.getCurrent();
 
-    let code = current.length ? 200 : 204;
+    let code = current ? 200 : 204;
 
     res.status(code).send(current);
 });

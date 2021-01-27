@@ -22,8 +22,18 @@ async function get(username) {
     return await PaidTime.findOne({ username: username });
 }
 
+async function getAll() {
+    return await PaidTime.find();
+}
+
 async function update(username, data) {
     const paidTime = await PaidTime.findOne({ username: username });
+
+    // for (let key in data) {
+    //     if (data.hasOwnProperty(key)) {
+    //         paidTime[key] = data[key];
+    //     }
+    // }
 
     if (data.used) {
         paidTime.used = data.used;
@@ -39,5 +49,6 @@ async function update(username, data) {
 module.exports = {
     create,
     get,
+    getAll,
     update,
 };
