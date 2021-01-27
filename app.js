@@ -24,10 +24,10 @@ app.use(bodyParser.urlencoded({
     await db.load();
 })();
 
-app.use('/timecard/entries', entriesRoutes);
-app.use('/timecard/ranges', rangesRoutes);
-app.use('/timecard/paid-time', paidTimeRoutes);
-app.use('/timecard/totals', totalsRoutes);
+app.use('/entries', entriesRoutes);
+app.use('/ranges', rangesRoutes);
+app.use('/paid-time', paidTimeRoutes);
+app.use('/totals', totalsRoutes);
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }));
 
