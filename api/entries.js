@@ -16,7 +16,7 @@ async function getAllEntries(username) {
 async function getCurrentRange(username) {
     let current = await ranges.getCurrent();
 
-    if (!Object.keys(current).length) {
+    if (!current || !Object.keys(current).length) {
         return [];
     }
 
