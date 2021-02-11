@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const DateOnly = require('mongoose-dateonly')(mongoose);
+
 // const timeZone = require('mongoose-timezone');
 
 const rangeSchema = new Schema({
-    start: Date,
-    end: Date
+    start: DateOnly,
+    end: DateOnly,
 });
 
 // rangeSchema.plugin(timeZone);

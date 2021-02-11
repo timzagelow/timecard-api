@@ -2,18 +2,24 @@ const Range = require('../models/Range');
 const moment = require('moment');
 
 async function getRanges() {
-    return await Range.find().sort({ end: -1 });
+    const ranges = await Range.find().sort({ end: -1 });
+
+    return ranges.map(range => {
+        return { start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
+    });
 }
 
 async function getCurrent() {
-    let now = moment();
+    let now = Date.now();
 
-    return await Range.findOne({ start: { $lte: now }, end: { $gte: now } });
+    let range = await Range.findOne({ start: { $lte: now }, end: { $gte: now } });
+
+    return { start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
 }
 
 async function create(data) {
-    let start = moment(data.start + ' 00:00:00');
-    let end = moment(data.end + ' 23:59:59');
+    let start = moment(data.start).format('M/D/YYYY');
+    let end = moment(data.end).format('M/D/YYYY');
 
     const range = new Range({ start: start, end: end });
 
@@ -24,11 +30,11 @@ async function update(id, data) {
     const range = await Range.findOne({ _id: id });
 
     if (data.start) {
-        range.start = moment(data.start + ' 00:00:00').toISOString();
+        range.start = moment(data.start).format('M/D/YYYY');
     }
 
     if (data.end) {
-        range.end = moment(data.end + ' 15:59:59').toISOString();
+        range.end = moment(data.end).format('M/D/YYYY');
     }
 
     return await range.save();
