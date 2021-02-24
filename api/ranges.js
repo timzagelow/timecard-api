@@ -5,7 +5,7 @@ async function getRanges() {
     const ranges = await Range.find().sort({ end: -1 });
 
     return ranges.map(range => {
-        return { start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
+        return { _id: range._id, start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
     });
 }
 
@@ -14,7 +14,7 @@ async function getCurrent() {
 
     let range = await Range.findOne({ start: { $lte: now }, end: { $gte: now } });
 
-    return { start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
+    return { _id: range._id, start: moment(range.start).format('YYYY-MM-DD'), end: moment(range.end).format('YYYY-MM-DD') };
 }
 
 async function create(data) {

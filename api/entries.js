@@ -3,10 +3,10 @@ const moment = require('moment');
 const ranges = require('./ranges');
 
 async function getRange(username, data) {
-    let start = moment(data.start).utc();
-    let end = moment(data.end).utc();
+    let start = moment(data.start + ' 00:00:00').subtract(8, 'hours');
+    let end = moment(data.end + ' 23:59:59').subtract(8, 'hours');
 
-    return await Entry.find({ username: username, date: { $gte: start, $lte: end } }).sort({ date: 1 });
+    return await Entry.find({ username: username, date: { $gte: new Date(start), $lte: new Date(end) } }).sort({ date: 1 });
 }
 
 async function getAllEntries(username) {
@@ -20,6 +20,8 @@ async function getCurrentRange(username) {
         return [];
     }
 
+    console.log('get current');
+    console.log(current);
     return await getRange(username, { start: current.start, end: current.end });
 }
 
