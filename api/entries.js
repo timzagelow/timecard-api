@@ -3,8 +3,8 @@ const moment = require('moment');
 const ranges = require('./ranges');
 
 async function getRange(username, data) {
-    let start = moment(data.start + ' 00:00:00').subtract(8, 'hours');
-    let end = moment(data.end + ' 23:59:59').subtract(8, 'hours');
+    let start = moment(data.start + ' 00:00:00').add(8, 'hours');
+    let end = moment(data.end + ' 23:59:59').add(8, 'hours');
 
     return await Entry.find({ username: username, date: { $gte: new Date(start), $lte: new Date(end) } }).sort({ date: 1 });
 }
