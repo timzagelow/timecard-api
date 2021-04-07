@@ -20,8 +20,6 @@ async function getCurrentRange(username) {
         return [];
     }
 
-    console.log('get current');
-    console.log(current);
     return await getRange(username, { start: current.start, end: current.end });
 }
 
