@@ -7,6 +7,7 @@ const entriesRoutes = require('./routes/entries');
 const rangesRoutes = require('./routes/ranges');
 const paidTimeRoutes = require('./routes/paidTime');
 const totalsRoutes = require('./routes/totals');
+const calendarRoutes = require('./routes/calendar');
 const errorHandler = require('./errorHandler');
 
 const db = require('./db');
@@ -28,6 +29,7 @@ app.use('/entries', entriesRoutes);
 app.use('/ranges', rangesRoutes);
 app.use('/paid-time', paidTimeRoutes);
 app.use('/totals', totalsRoutes);
+app.use('/calendar', calendarRoutes);
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' }));
 
