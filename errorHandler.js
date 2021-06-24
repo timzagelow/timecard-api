@@ -1,6 +1,6 @@
 const logger = require('./logger');
 
-module.exports = (err, req, res, next) => {
+module.exports = (err, req, res) => {
     let status = 500;
 
     if (err.status) {
@@ -15,5 +15,4 @@ module.exports = (err, req, res, next) => {
     logger.error(err.message, { code: status, errors: err });
 
     res.status(status).send({ message: err.message });
-    // next(err);
 };

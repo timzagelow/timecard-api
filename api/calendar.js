@@ -17,7 +17,8 @@ async function get(from, to) {
     
     return entries.map(entry => {
         let date = moment(entry.start);
-        console.log(date);
+        console.log(date, start, end);
+        
         if (date.isBetween(start, end)) {
             return entry;
         }

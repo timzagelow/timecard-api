@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// const timeZone = require('mongoose-timezone');
 
 const calendarSchema = new Schema({
     username: String,

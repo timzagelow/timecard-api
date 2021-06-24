@@ -29,12 +29,6 @@ async function getAll() {
 async function update(username, data) {
     const paidTime = await PaidTime.findOne({ username: username });
 
-    // for (let key in data) {
-    //     if (data.hasOwnProperty(key)) {
-    //         paidTime[key] = data[key];
-    //     }
-    // }
-
     if (data.used) {
         paidTime.used = data.used;
     }
